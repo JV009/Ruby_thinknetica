@@ -17,7 +17,7 @@ class Station
   def type_trains
     @type = {cargo:0, pass:0}
     @trains.each do |train|
-    @type[train.type] += 1
+      @type[train.type] += 1
     end  
   end            
 end  

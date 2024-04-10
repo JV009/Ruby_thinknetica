@@ -6,10 +6,10 @@ class Train
   TYPES = [:pass, :cargo]
 
   def initialize(number, type, carriges)
-  @number = number
-  @type = type
-  @carriges = carriges.to_i
-  @speed = 0
+    @number = number
+    @type = type
+    @carriges = carriges.to_i
+    @speed = 0
   end
   
   def stop
