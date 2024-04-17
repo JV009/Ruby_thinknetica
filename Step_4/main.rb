@@ -150,16 +150,14 @@ class Interface
   end
 
   def route_operation
-    print "Write the number of route"
+    puts "Write the number of route"
     route_number = gets.chomp.to_i
-    puts "Доступные поезда:"
-    display_trains
-    print "\nВведите индекс поезда для присвоения маршрута: "
+    puts "Write the number of train"
     train_number = gets.chomp.to_i
     train = @trains[train_number]
     route = @routes[route_number]
     train.add_route(route)
-    puts "#{train.number}' будет следовать по маршруту из '#{route.stations[0].name}' в '#{route.stations[-1].name}'"
+    puts "Train № #{train.number} will follow on the route #{route.stations[0].name} to #{route.stations[-1].name}"
   end
 
   def carriages_operation
@@ -176,7 +174,7 @@ class Interface
   end
 
   def add_carriage
-    print "Write the number of train to add carriage"
+    puts "Write the number of train to add carriage"
     train_number = gets.chomp.to_i
     train = @trains[train_number]
     carriage = create_carriage(carriage_number, train.type)
@@ -184,12 +182,10 @@ class Interface
   end
 
   def remove_carriage
-    print "Write the number of train to delete carriage"
+    puts "Write the number of train to delete carriage"
     train_number = gets.chomp.to_i
     train = @trains[train_number]
-    puts "Which a carriage?"
-    display_carriage.each_with_number { |carriage, number| puts "#{number+1}. #{carriage.number}"}
-    print "\nВведите индекс вагона: "
+    puts "Write the number of carriage"
     carriage_number = gets.chomp.to_i
     train.remove_carriage(train.carriage[carriage_number])
   end
@@ -208,7 +204,7 @@ class Interface
   end
 
   def move_next
-    print "Write the number of train"
+    puts "Write the number of train"
     train_number = gets.chomp.to_i
     if @trains[train_number].route.nil?
       puts "This train without a route!"
@@ -219,7 +215,7 @@ class Interface
   end
 
   def move_previous
-    print "Write the number of train"
+    puts "Write the number of train"
     train_number = gets.chomp.to_i
     if @trains[train_number].route.nil?
       puts "This train without a route!"
@@ -237,17 +233,5 @@ class Interface
     puts "write the name of station"
     name_station = gets.chomp
     stations.each { |station| station.trains.each { |train| puts "Поезд - №#{train.number}"} if station.name_station == name_station }
-  end
-
-  def seed
-  railway_stations = ["Лунолет", "Драконь", "Чудолесь", "Звездарь", "Зазеркалье", "Цветоль", "Подполь"]
-  railway_stations.each { |station| @stations << Station.new(station)}
-  4.times do @routes << Route.new(@stations[rand(0..6)], @stations[rand(0..6)]) end
-  10.times do @routes[rand(0..3)].add_station(@stations[rand(0..6)]) end
-  #Добавим поезда:
-  3.times do @trains << PassengerTrain.new(rand(1000..9999)) end
-  3.times do @trains << CargoTrain.new(rand(1000..9999)) end
-  #Каким то поездам повезет с маршрутом:
-  4.times do @trains[rand(0..3)].add_rout(@routes[rand(0..3)]) end
   end
 end
