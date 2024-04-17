@@ -60,7 +60,7 @@ class Interface
   def creating
     loop do
       creating_menu
-      i == gets.chomp.to_1
+      i = gets.chomp.to_i
       case i
       when 1 
         create_train
@@ -112,7 +112,7 @@ class Interface
       start_station = gets.chomp
       puts "Write the last station"
       end_station = gets.chomp
-      @routes << Route.new(@stations.find { |st| st.name == start_station }, @stations.find { |st| st.name == end_station }, route_number)
+      @routes << Route.new(start_station,end_station)
     end
   end       
 
@@ -196,6 +196,6 @@ class Interface
   def show_trains
     puts "write the name of station"
     name_station = gets.chomp
-    stations.each { |station| station.trains.each { |train| puts "Поезд - №#{train.number}"} if station.name == name_station }
+    stations.each { |station| station.trains.each { |train| puts "Поезд - №#{train.number}"} if station.name_station == name_station }
   end
 end
