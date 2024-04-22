@@ -1,3 +1,5 @@
+require_relative 'train'
+
 class Train_pass < Train 
 
   def initialize

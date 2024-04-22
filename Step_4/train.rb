@@ -1,7 +1,7 @@
 class Train
   attr_accessor :speed
 
-  attr_reader :number, :type, :carriages
+  attr_reader :number, :type, :carriages, :route
 
   TYPES = [:pass, :cargo]
 

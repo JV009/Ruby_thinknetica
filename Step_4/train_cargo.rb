@@ -1,3 +1,5 @@
+require_relative 'train'
+
 class Train_cargo < Train 
 
   def initialize(number)

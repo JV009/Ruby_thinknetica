@@ -1,3 +1,5 @@
+require_relative 'carriage'
+
 class Carriage_pass < Carriage
 	
   def initialize(number)

@@ -137,15 +137,13 @@ class Interface
   def station_operation
     puts "Write the name of station"
     name_station = gets.chomp
-    puts "Write the number of route"
-    route_number = gets.chomp.to_i
     puts "1 - add station"
     puts "2 - delete station"
     i = gets.chomp.to_i
     if i == 1
-      route.add_station(name_station, route_number)
+      route.add_station(name_station)
     else
-      route.delete_station(name_station, route_number)
+      route.delete_station(name_station)
     end
   end
 
