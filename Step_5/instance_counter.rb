@@ -1,7 +1,7 @@
 module InstanceCounter
   def self.include(base)
     base.extend ClassMethods
-	base.include InstanceMethods
+	  base.include InstanceMethods
   end
 
   module ClassMethods
