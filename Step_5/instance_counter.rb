@@ -8,11 +8,11 @@ module InstanceCounter
     attr_accessor :instances
 
     def instances
-      @instances = 0
+      @instances ||= 0
     end
 
     def register_instance
-      @instances = 0
+      @instances ||= 0
       @instances += 1
     end
   end
