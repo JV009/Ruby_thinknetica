@@ -8,6 +8,7 @@ require_relative 'station'
 require_relative 'route'
 require_relative 'company'
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Interface
   attr_reader :train, :carriages, :statation, :route
@@ -78,16 +79,17 @@ class Interface
     end
   end
 
-  def create_train
+  def create_trains
     loop do
       puts "Write the number of train (like: '123-12' or 'aaaaa') or nothing to exit"
-      train_number = gets.chomp
-      break if train_number == 0
-      begin
-        puts "1 - passenger type"
-        puts "2 - cargo type"
-        i = gets.chomp.to_i
-      end until i == 1 || i == 2
+      number_train = gets.chomp
+      break if train_number == ""
+        begin
+          puts "1 - passenger type"
+          puts "2 - cargo type"
+          i = gets.chomp.to_i
+        end until i == 1 || i == 2
+
         if i == 1
           @trains << Train_pass.new(train_number)
         else
@@ -113,7 +115,7 @@ class Interface
     loop do 
       puts "Write the number of route (from 3 to  characters) or nothing to exit"
       route_number = gets.chomp
-      break if route_number == 0
+      break if route_number == ""
       puts "Write the first station"
       start_station = gets.chomp
       puts "Write the last station"
@@ -126,7 +128,7 @@ class Interface
     loop do
       puts "Write the number of carriage (5 characters) or nothing to exit"
       carriage_number = gets.chomp
-      break if carriage_number == 0
+      break if carriage_number == ""
       puts "1 - passenger type"
       puts "2 - cargo type"
       i = gets.chomp.to_i
