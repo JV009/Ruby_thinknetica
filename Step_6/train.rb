@@ -61,7 +61,6 @@ class Train
 
   def add_carriage(carrige)
     @carriges << carrige if @speed.zero?
-    end
   end
 
   def delete_carriage(carrige)
