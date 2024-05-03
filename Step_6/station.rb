@@ -43,5 +43,5 @@ class Station
   def validate!
     raise "Wrong type of name station!" if number !~ NAME_FORMAT
   end
-end  
+end 
 

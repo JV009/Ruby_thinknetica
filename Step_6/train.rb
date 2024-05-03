@@ -27,7 +27,7 @@ class Train
   
   def stop
     @speed = 0
-  end 	
+  end   
   
   def add_route(route)
     @route = route

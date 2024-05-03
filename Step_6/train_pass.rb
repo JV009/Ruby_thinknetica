@@ -2,7 +2,7 @@ require_relative 'train'
 
 class Train_pass < Train 
 
-  def initialize
+  def initialize(number)
     super(number, :pass)
   end	
 

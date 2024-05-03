@@ -79,17 +79,20 @@ class Interface
     end
   end
 
-  def create_trains
-    begin
-      puts "Write the number of train (like: '123-12' or 'aaaaa') or nothing to exit"
-      number_train = gets.chomp
-      puts "1 - passenger type"
-      puts "2 - cargo type"
-      i = gets.chomp.to_i
-      if i == 1
-        @trains << Train_pass.new(train_number)
-      else
-        @trains << Train_cargo.new(train_number)
+  def create_train
+    loop do
+      begin
+        puts "Write the number of train (like: '123-12' or 'aaaaa') or nothing to exit"
+        train_number = gets.chomp
+        break if train_number == ""
+        puts "1 - passenger type"
+        puts "2 - cargo type"
+        i = gets.chomp.to_i
+        if i == 1
+          @trains << Train_pass.new(train_number)
+        else
+          @trains << Train_cargo.new(train_number)
+        end
       end
     end
   rescue StandardError => e
