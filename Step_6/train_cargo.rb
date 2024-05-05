@@ -1,9 +1,10 @@
 require_relative 'train'
 
-class Train_cargo < Train 
+class TrainCargo < Train 
 
   def initialize(number)
-    super(number, :cargo)
+    @type = :cargo
+    super
   end
   
   def add_carriage(carriage)

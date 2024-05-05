@@ -1,8 +1,9 @@
 require_relative 'carriage'
 
-class Carriage_pass < Carriage
+class CarriagePass < Carriage
 	
   def initialize(number)
-  super(number, :pass)
+  @type = :pass  
+  super
   end
 end	

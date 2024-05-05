@@ -41,7 +41,7 @@ class Station
   protected
 
   def validate!
-    raise "Wrong type of name station!" if number !~ NAME_FORMAT
+    raise "Wrong type of name station!" if name_station !~ NAME_FORMAT
   end
 end 
 

@@ -11,7 +11,7 @@ class Train
 
   attr_reader :number, :type, :carriages, :route
 
-  NUMBER_FORMAT = /\A[a-z0-9]{3}\-?[a-z0-9]{2}\z/i
+  NUMBER_FORMAT = /\A[\p{L}\d]{3}-?[\p{L}\d]{2}\z/
 
   @@trains = []
 
@@ -21,7 +21,6 @@ class Train
     @carriges = []
     @speed = 0
     validate!
-    @@trains[number] = self
     register_instance
   end
   

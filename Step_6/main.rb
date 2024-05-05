@@ -11,7 +11,7 @@ require_relative 'instance_counter'
 require_relative 'valid'
 
 class Interface
-  attr_reader :train, :carriages, :statation, :route
+  attr_reader :trains, :carriages, :statations, :routes
 
   def initialize  
     @trains = []
@@ -89,10 +89,11 @@ class Interface
         puts "2 - cargo type"
         i = gets.chomp.to_i
         if i == 1
-          @trains << Train_pass.new(train_number)
+          @trains << TrainPass.new(train_number)
         else
-          @trains << Train_cargo.new(train_number)
+          @trains << TrainCargo.new(train_number)
         end
+          puts "Train  #{train_number} was created!"
       end
     end
   rescue StandardError => e
@@ -111,14 +112,14 @@ class Interface
   
   def create_route
     loop do 
-      puts "Write the number of route (from 3 to  characters) or nothing to exit"
+      puts "Write the number of route (from 3 to 20 characters) or nothing to exit"
       route_number = gets.chomp
       break if route_number == ""
       puts "Write the first station"
       start_station = gets.chomp
       puts "Write the last station"
       end_station = gets.chomp
-      @routes << Route.new(start_station,end_station)
+      @routes << Route.new(start_station,end_station, route_number)
     end
   end       
 
@@ -132,9 +133,9 @@ class Interface
       i = gets.chomp.to_i
       until i == 1 || i == 2
         if i == 1
-          @carriages << Carriage_pass.new(carriage_number)
+          @carriages << CarriagePass.new(carriage_number)
         else
-          @carriages << Carriage_cargo.new(carriage_number)
+          @carriages << CarriageCargo.new(carriage_number)
         end
       end
     end
