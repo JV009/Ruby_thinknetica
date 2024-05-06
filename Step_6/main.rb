@@ -93,7 +93,7 @@ class Interface
         else
           @trains << TrainCargo.new(train_number)
         end
-          puts "Train  #{train_number} was created!"
+          puts "Train № #{train_number} was created!"
       end
     end
   rescue StandardError => e
@@ -107,6 +107,7 @@ class Interface
       name_station = gets.chomp 
       break if name_station == ""
       @stations << Station.new(name_station)
+      puts "Station -#{name_station}- was created!"
     end
   end
   
@@ -120,6 +121,7 @@ class Interface
       puts "Write the last station"
       end_station = gets.chomp
       @routes << Route.new(start_station,end_station, route_number)
+      puts "Route № #{route_number} with the first station -#{start_station}- and the last station -#{end_station}- was created!"
     end
   end       
 
@@ -138,6 +140,7 @@ class Interface
           @carriages << CarriageCargo.new(carriage_number)
         end
       end
+      puts "Carriage № #{carriage_number} was created!"
     end
   end
 

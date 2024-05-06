@@ -9,9 +9,9 @@ class Route
 
   NAME_FORMAT = /\A[a-z0-9]{3,20}\z/i 	
 
-  def initialize(start_station, end_station, number)
+  def initialize(start_station, end_station, number_route)
     @stations = [start_station, end_station]
-    @number_route = number
+    @number_route = number_route
     validate!
     register_instance
   end	
@@ -27,6 +27,6 @@ class Route
   protected
 
   def validate!
-    raise "Wrong type of name station!" if number !~ NAME_FORMAT
+    raise "Wrong type of name station!" if number_route !~ NAME_FORMAT
   end
 end
