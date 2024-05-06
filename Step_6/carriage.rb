@@ -11,7 +11,7 @@ class Carriage
 
   NUMBER_FORMAT = /^\d{5}$/
 	
-  def initialize(number, type)
+  def initialize(number)
     @number = number
     @type = type
     validate!
