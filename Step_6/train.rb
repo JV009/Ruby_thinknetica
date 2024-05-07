@@ -9,7 +9,7 @@ class Train
 
   attr_accessor :speed
 
-  attr_reader :number, :type, :carriage, :route, :station
+  attr_reader :number, :type, :carriage, :route, :stations
 
   NUMBER_FORMAT = /\A[\p{L}\d]{3}-?[\p{L}\d]{2}\z/
 
@@ -31,7 +31,7 @@ class Train
   def add_route(route)
     @route = route
     @current_station_index = 0
-    @current_station.get_train(self)    
+    @route.stations[0].get_train(self)    
   end
 
   def next

@@ -179,9 +179,9 @@ class Interface
 
   def route_operation
     puts "Write the number of route"
-    route_number = gets.chomp
+    route_number = gets.chomp.to_i
     puts "Write the number of train"
-    train_number = gets.chomp
+    train_number = gets.chomp.to_i
     @trains.each do |train|
       train.add_route(@routes.find { |route| route.number_route == route_number }) if train.number == train_number
     end
