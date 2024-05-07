@@ -5,7 +5,7 @@ class Station
   include InstanceCounter
   include Valid
   
-  attr_reader :trains, :name_station
+  attr_reader :train, :name_station
 
   NAME_FORMAT = /\A[a-z0-9]{2,15}\z/i
 

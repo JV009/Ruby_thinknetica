@@ -5,7 +5,7 @@ class Route
   include InstanceCounter
   include Valid
   
-  attr_reader :stations, :number_route, :start_station, :end_station
+  attr_reader :interstation, :number_route, :start_station, :end_station, :route, :stations
 
   NAME_FORMAT = /\A[a-z0-9]{3,20}\z/i 	
 
@@ -27,6 +27,6 @@ class Route
   protected
 
   def validate!
-    raise "Wrong type of name station!" if number_route !~ NAME_FORMAT
+    raise "Wrong type of route number!" if number_route !~ NAME_FORMAT
   end
 end

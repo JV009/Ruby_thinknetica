@@ -11,7 +11,7 @@ require_relative 'instance_counter'
 require_relative 'valid'
 
 class Interface
-  attr_reader :trains, :carriages, :statations, :routes
+  attr_reader :trains, :carriages, :stations, :routes
 
   def initialize  
     @trains = []
@@ -23,7 +23,7 @@ class Interface
   def main_menu
     loop do  
       puts "1 - if you want create a train, station, carriage or route"
-      puts "2 - if you want add or delete station"
+      puts "2 - if you want add or delete station from a route"
       puts "3 - if you want appoint route"
       puts "4 - if you want add or delete carriage"
       puts "5 - if you want change station at the train"
@@ -35,7 +35,7 @@ class Interface
       when 1
         creating
       when 2
-        stations_operation
+        station_operation
       when 3
         route_operation
       when 4
@@ -90,7 +90,7 @@ class Interface
         i = gets.chomp.to_i
         if i == 1
           @trains << TrainPass.new(train_number)
-        else
+        elsif i == 2
           @trains << TrainCargo.new(train_number)
         end
           puts "Train № #{train_number} was created!"
@@ -103,57 +103,77 @@ class Interface
 
   def create_station
     loop do
-      puts "Write the name of station (from 2 to 15 characters) or nothing to exit"
-      name_station = gets.chomp 
-      break if name_station == ""
-      @stations << Station.new(name_station)
-      puts "Station -#{name_station}- was created!"
+      begin
+        puts "Write the name of station (from 2 to 15 characters) or nothing to exit"
+        name_station = gets.chomp 
+        break if name_station == ""
+        @stations << Station.new(name_station)
+        puts "Station -#{name_station}- was created!"
+      end
     end
+  rescue StandardError => e
+    puts e.message
+    retry
   end
   
   def create_route
-    loop do 
-      puts "Write the number of route (from 3 to 20 characters) or nothing to exit"
-      route_number = gets.chomp
-      break if route_number == ""
-      puts "Write the first station"
-      start_station = gets.chomp
-      puts "Write the last station"
-      end_station = gets.chomp
-      @routes << Route.new(start_station,end_station, route_number)
-      puts "Route № #{route_number} with the first station -#{start_station}- and the last station -#{end_station}- was created!"
+    loop do
+      begin 
+        puts "Write the number of route (from 3 to 20 characters) or nothing to exit"
+        route_number = gets.chomp
+        break if route_number == ""
+        puts "Write the first station"
+        start_station = gets.chomp
+        puts "Write the last station"
+        end_station = gets.chomp
+        @routes << Route.new(start_station,end_station, route_number)
+        puts "Route № #{route_number} with the first station -#{start_station}- and the last station -#{end_station}- was created!"
+      end 
     end
+  rescue StandardError => e
+    puts e.message
+    retry
   end       
 
   def create_carriage
     loop do
-      puts "Write the number of carriage (5 characters) or nothing to exit"
-      carriage_number = gets.chomp
-      break if carriage_number == ""
-      puts "1 - passenger type"
-      puts "2 - cargo type"
-      i = gets.chomp.to_i
-      until i == 1 || i == 2
+      begin
+        puts "Write the number of carriage (5 characters) or nothing to exit"
+        carriage_number = gets.chomp
+        break if carriage_number == ""
+        puts "1 - passenger type"
+        puts "2 - cargo type"
+        i = gets.chomp.to_i
         if i == 1
           @carriages << CarriagePass.new(carriage_number)
-        else
+          puts "Carriage № #{carriage_number} was created!"
+        elsif i == 2
           @carriages << CarriageCargo.new(carriage_number)
+          puts "Carriage № #{carriage_number} was created!"
         end
       end
-      puts "Carriage № #{carriage_number} was created!"
     end
+  rescue StandardError => e
+    puts e.message
+    retry 
   end
 
   def station_operation
+    puts "Write the number of route"
+    route_number = gets.chomp
     puts "Write the name of station"
     name_station = gets.chomp
     puts "1 - add station"
     puts "2 - delete station"
     i = gets.chomp.to_i
     if i == 1
-      route.add_station(name_station)
-    else
-      route.delete_station(name_station)
+      @routes.each do |route|
+        route.add_station(@stations.find { |st| st.name_station == name_station }) if route.number_route == route_number
+      end
+    elsif i == 2
+      @routes.each do |route|
+        route.delete_station(@stations.find { |st| st.name_station == name_station }) if route.number_route == route_number
+      end
     end
   end
 
@@ -162,40 +182,28 @@ class Interface
     route_number = gets.chomp
     puts "Write the number of train"
     train_number = gets.chomp
-    train = @trains[train_number]
-    route = @routes[route_number]
-    train.add_route(route)
-    puts "Train № #{train.number} will follow on the route #{route.stations[0].name} to #{route.stations[-1].name}"
+    @trains.each do |train|
+      train.add_route(@routes.find { |route| route.number_route == route_number }) if train.number == train_number
+    end
   end
 
   def carriages_operation
     puts "Write the number of carriage"
     carriage_number = gets.chomp
+    puts "Write the number of train to add carriage"
+    train_number = gets.chomp
     puts "1 - add carriage"
     puts "2 - delete carriage"
     i = gets.chomp.to_i
     if i == 1 
-      add_carriage
-    else
-      remove_carriage
+      @trains.each do |train|
+        train.add_carriage(@carriages.find{ |carriage| carriage.number == carriage_number }) if train.number == train_number
+      end
+    elsif i == 2
+      @trains.each do |train|
+        train.delete_carriage(@carriages.find{ |carriage| carriage.number == carriage_number }) if train.number == train_number
+      end
     end
-  end
-
-  def add_carriage
-    puts "Write the number of train to add carriage"
-    train_number = gets.chomp
-    train = @trains[train_number]
-    carriage = create_carriage(carriage_number, train.type)
-    train.add_carriage(carriage)
-  end
-
-  def remove_carriage
-    puts "Write the number of train to delete carriage"
-    train_number = gets.chomp
-    train = @trains[train_number]
-    puts "Write the number of carriage"
-    carriage_number = gets.chomp
-    train.remove_carriage(train.carriage[carriage_number])
   end
 
    def train_operation
@@ -206,7 +214,7 @@ class Interface
     i = gets.chomp.to_i
     if i == 1
       move_next
-    else
+    elsif i == 2
       move_previous
     end
   end
@@ -234,12 +242,12 @@ class Interface
   end
 
   def show_stations
-    stations.each { |station| puts "Станция - #{station.name}" }
+    @stations.each { |station| puts "Station - #{station.name_station}" }
   end
 
   def show_trains
     puts "write the name of station"
     name_station = gets.chomp
-    stations.each { |station| station.trains.each { |train| puts "Поезд - №#{train.number}"} if station.name_station == name_station }
+    @stations.each { |station| station.trains.each { |train| puts "Train - № #{train.number}"} if station.name_station == name_station }
   end
 end
