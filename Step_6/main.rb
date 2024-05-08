@@ -23,7 +23,7 @@ class Interface
   def main_menu
     loop do  
       puts "1 - if you want create a train, station, carriage or route"
-      puts "2 - if you want add or delete station from a route"
+      puts "2 - if you want add or delete station on/from a route"
       puts "3 - if you want appoint route"
       puts "4 - if you want add or delete carriage"
       puts "5 - if you want change station at the train"
@@ -221,7 +221,7 @@ class Interface
 
   def move_next
     puts "Write the number of train"
-    train_number = gets.chomp
+    train_number = gets.chomp.to_i
     if @trains[train_number].route.nil?
       puts "This train without a route!"
       return
@@ -232,7 +232,7 @@ class Interface
 
   def move_previous
     puts "Write the number of train"
-    train_number = gets.chomp
+    train_number = gets.chomp.to_i
     if @trains[train_number].route.nil?
       puts "This train without a route!"
       return
@@ -248,6 +248,7 @@ class Interface
   def show_trains
     puts "write the name of station"
     name_station = gets.chomp
+    puts "Are at the station #{name_station}:"
     @stations.each { |station| station.trains.each { |train| puts "Train - № #{train.number}"} if station.name_station == name_station }
   end
 end
