@@ -161,7 +161,7 @@ class Interface
         elsif i == 2
           puts "Write the volume of carriage"
           volume = gets.chomp.to_i
-          @carriages << CarriageCargo.new(carriage_number)
+          @carriages << CarriageCargo.new(carriage_number, volume)
           puts "Carriage № #{carriage_number} was created!"
         end
       end
@@ -203,7 +203,7 @@ class Interface
   def carriages_operation
     puts "Write the number of carriage"
     carriage_number = gets.chomp
-    puts "Write the number of train to add carriage"
+    puts "Write the number of train to add/delete the carriage"
     train_number = gets.chomp
     puts "1 - add carriage"
     puts "2 - delete carriage"
@@ -295,7 +295,7 @@ class Interface
       puts "#{index + 1}, carriage № #{carriage.number}, type - #{carriage.type}"
     end
     puts "Write the index of carriage"
-    carriage_index = gets.chomp.to_i
+    carriage_index= get_choice(1)
     case @carriages[carriage_index].type
     when :pass
       @carriages[carriage_index].take_seat
@@ -303,9 +303,14 @@ class Interface
     when :cargo
       puts "Free volume in this carriage is #{@carriages[carriage_index].free_volume}"
       puts "Write the loading volume"
-      loading_volume = gets.chomp.to_i
+      loading_volume = get_choice
       @carriages[carriage_index].load_carriage(loading_volume)
       puts "Into the carriage № #{@carriages[carriage_index].number} added the cargo volume #{loading_volume}"
     end
+  end
+
+  def get_choice(i=0)
+    choice = gets.chop
+    choice = choice.to_i - i
   end
 end
