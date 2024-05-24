@@ -5,6 +5,10 @@ require_relative 'carriage'
 class CarriagePass < Carriage
   attr_reader :count_seats, :occupied_seats, :free_seats, :type
 
+  validate :number, :presence
+  validate :number, :type_format, /^\d{5}$/
+  validate :number, :type_class, String
+
   def initialize(number, seats)
     @type = :pass
     @count_seats = seats

@@ -16,10 +16,6 @@ class Carriage
   attr_accessor_with_history :number
   strong_attr_accessor :number, String
 
-  validate :number, :presence
-  validate :number, :type_format, /^\d{5}$/
-  validate :number, :type_class, String
-
   def initialize(number)
     @number = number
     register_instance

@@ -16,10 +16,6 @@ class Train
   attr_accessor_with_history :speed, :number
   strong_attr_accessor :number, String
 
-  validate :number, :presence
-  validate :number, :type_format, /\A[\p{L}\d]{3}-?[\p{L}\d]{2}\z/
-  validate :number, :type_class, String
-
   @@trains = []
 
   def initialize(number)
